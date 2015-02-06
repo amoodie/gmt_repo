@@ -1,0 +1,32 @@
+#!/bin/bash
+
+gmt set PS_MEDIA letter
+gmt set PROJ_LENGTH_UNIT inch
+gmt set PS_PAGE_ORIENTATION landscape
+gmt set FONT_LABEL 09p
+gmt set MAP_FRAME_WIDTH 0.1p
+gmt set FONT_ANNOT_PRIMARY 12p
+gmt set FONT_LABEL 12p
+gmt set MAP_TICK_LENGTH_PRIMARY 0.05i
+
+# make the map
+gmt pscoast -R-126/18/-54/52r -JA-100/30/5i -Xc -Yc -B20a0 -Dl -W -A0/0/1 -Ggrey -K > APP_con.ps
+gmt psxy -R -JA-100/30/5i -O -W1.0,black,-. -V -K << EOF >> APP_con.ps
+-87	33
+-87	41.5
+-74	41.5
+-74	33
+-87	33
+EOF
+
+# add Uni stars
+gmt psxy -R -JA-100/30/5i -O -Sa0.15 -G255/0/0 -W0.1pt,black -V -K << EOF >> APP_con.ps
+-75.379		40.607167
+-95.402778	29.716944
+EOF
+
+# draw line
+gmt psxy -R -JA-100/30/5i -O -W0.5pt,red,-- -V << EOF >> APP_con.ps
+-75.379		40.607167	Lehigh
+-95.402778	29.716944
+EOF
